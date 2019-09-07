@@ -5,6 +5,7 @@ from django.http import HttpResponseNotFound, JsonResponse, HttpResponseBadReque
 from django.urls import reverse
 from django.utils.timezone import now
 from walker import models, forms
+from walker import metrics
 
 
 class WalkDetailsView(View):
@@ -42,6 +43,9 @@ class CompleteWalkView(WalkDetailsView):
             updated_walk.end_time = now()
             updated_walk.save()
 
+            metrics.walks_completed.inc()
+            metrics.walk_distance.observe(updated_walk.distance)
+
             return redirect(f'{reverse("walk_start")}?walk={walk.id}')
 
         return HttpResponseBadRequest(content=f'form validation failed with errors {form.errors}')
@@ -59,6 +63,10 @@ class StartWalkView(View):
             walk.start_time = now()
             walk.save()
 
+            metrics.walks_started.inc()
+
             return redirect(f'{reverse("walk_start")}?walk={walk.id}')
+
+        metrics.invalid_walks.inc()
 
         return HttpResponseBadRequest(content=f'form validation failed with errors {form.errors}')
