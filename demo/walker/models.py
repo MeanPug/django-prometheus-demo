@@ -45,5 +45,10 @@ class Walk(ExportModelOperationsMixin('walk'), models.Model):
     def is_complete(self):
         return self.end_time is not None
 
+    @classmethod
+    def in_progress(cls):
+        """ get the list of `Walk`s currently in progress """
+        return cls.objects.filter(start_time__isnull=False, end_time__isnull=True)
+
     def __str__(self):
         return f'{self.walker.name} // {self.dog.name} @ {self.start_time} ({self.id})'
