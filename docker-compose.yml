@@ -25,5 +25,12 @@ services:
       - "8000:8000"
     volumes:
       - ./demo:/code/
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
 volumes:
   pgdata: {}
