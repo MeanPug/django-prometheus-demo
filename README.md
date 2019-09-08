@@ -1,5 +1,5 @@
 # django-prometheus-demo
-Basic demo application showcasing Django + Prometheus + Kubernetes
+Basic demo application showcasing Django + Prometheus + Kubernetes. For more reading about the why and how of custom metrics with Django, you can check out the post [custom application metrics with Django, Prometheus, and Kubernetes](https://labs.meanpug.com/custom-application-metrics-with-django-prometheus-and-kubernetes/).
 
 ## Running
 ### Dependencies
