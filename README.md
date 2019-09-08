@@ -7,14 +7,27 @@ You'll need [Docker](https://docs.docker.com/install/) installed and a Kubernete
 
 ### Install the Web App
 ```
-docker build -t django-prometheus-demo:latest .
-helm upgrade --install demo helm/demo
+# in real life, we wouldnt VC the .htpasswd, but this is easy
+kc create secret generic prometheus-basic-auth --from-file=.htpasswd=prometheus/.htpasswd
+make
 ```
 
 ### Install the prometheus helm chart
 ```
 helm upgrade --install prometheus stable/prometheus -f helm/prometheus/values.yaml
 ```
+
+### Testing
+The primary urls for interacting with the app are:
+
+* /walks/start/
+* /walks/<walk_id>/complete/
+* /walks/<walk_id>/status/
+
+You can perform some actions at these locations, then verify that metrics are set properly by either:
+
+* Visiting the Prometheus server at http://localhost:9090
+* Using the `/metrics` endpoint to manually verify
 
 ## Development
 ```bash

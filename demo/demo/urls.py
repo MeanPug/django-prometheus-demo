@@ -19,5 +19,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('django_prometheus.urls')),
+    path('ht/', include('health_check.urls')),
     path('walks/', include('walker.urls')),
 ]

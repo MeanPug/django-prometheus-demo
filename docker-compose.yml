@@ -21,6 +21,7 @@ services:
       DB_USER: postgres
       DB_NAME: postgres
       DB_HOST: postgres
+      DEBUG: 1
     ports:
       - "8000:8000"
     volumes:
